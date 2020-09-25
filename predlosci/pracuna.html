@@ -1,0 +1,79 @@
+<div class="container">
+	<div class="jumbotron" style="text-align: center;">
+		<h1>Pregled racuna</h1>
+	</div>
+	<div class="row">
+	</div>
+</div>
+
+<div class="text-center">
+	<select class="height-30 float-left" ng-model="izabranZaposlenik" ng-options="zap.sifrazap as zap.ime+' '+zap.prezime for zap in oZaposlenici">
+		<option value="">Zaposlenici</option>
+	</select>
+	<input type="text" placeholder="Trazenje racuna" class="height-30 float-right margin-right" ng-model="inputTrazilica">
+</div>
+
+<div class="table-responsive" style="margin-top: 40px; background-color: white;">
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>Sifra racuna</th>
+				<th class="text-center">Zaposlenik</th>
+				<th class="text-center">Datum izdavanja</th>
+				<th class="text-center">Iznos</th>
+				<th class="text-right">Stavke</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="racun in oRacuni | filter: inputTrazilica | filter: fZaposlenici">
+				<td>{{racun.sifraracuna}}</td>
+				<td class="text-center">{{ImeZaposlenika[racun.sifrazaposlenika]}}</td>
+				<td class="text-center">{{dohvatiDatum(racun) | date:'dd.MM.yyyy HH:mm'}}</td>
+				<td class="text-center">{{racun.uiznos}} HRK</td>
+				<td>
+					<a ng-click="GetModal('prikazistavke', racun.stavke)" href="" style="float: right; margin-right: 11px;">
+          				<span class="glyphicon glyphicon-info-sign" style="font-size:1.5em;"></span>
+        			</a>
+    			</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div class="modal" id="prikazistavke" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">  
+			<div class="modal-header" style="background-color:#2a7ec5;">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" style="color:white"> Pregled stavki</h4>
+			</div>			
+			<div class="modal-body">
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>Sifra artikla</th>
+								<th>Naziv</th>
+								<th class="text-center">Opis</th>
+								<th class="text-center">Kolicina</th>
+								<th class="text-center">Cijena</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="stavka in PrikazStavki">
+								<td>{{stavka.id}}</td>
+								<td>{{stavka.naziv}}</td>
+								<td class="text-center">{{stavka.opis}}</td>
+								<td class="text-center">{{stavka.kolicina}}</td>
+								<td class="text-center">{{stavka.ukupna_cijena}} HRK</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="modal-footer" id="mfooter">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+			</div>
+		</div>
+	</div>
+</div>

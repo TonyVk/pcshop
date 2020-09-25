@@ -1,0 +1,48 @@
+<div class="container" id="login">
+    <div class="row justify-content-center align-items-center">
+         <div class="col-4">
+            <div class="card">
+            	<div class="card-header text-center"><h3>Login</h3></div>
+                <div class="card-body">
+                    <form class="form-horizontal">
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3" style="color: white;">Zaposlenik</label>
+						<div class="col-md-8">
+							<select class="height-30 float-left form-control" data-parsley-required="true" ng-model="Username" ng-options="zap.username as zap.ime+' '+zap.prezime for zap in oZaposlenici | filter:fRacunDeaktiviran">
+								<option value="">Zaposlenici</option>
+							</select>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3" style="color: white;">Sifra</label>
+						<div class="col-md-8">
+							<input 	ng-model="Sifra" data-parsley-required="true" type="password" placeholder="Unesite vasu sifru" class="form-control" >
+						</div>
+					</div>
+					<button type="submit" ng-click="Login()" class="btn btn-primary">Logirajte se</button>
+				</form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="obavijest" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">  
+			<div class="modal-header" style="background-color:#2a7ec5;">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" style="color:white"> Upozorenje</h4>
+			</div>			
+			<div class="modal-body">
+				<form class="form-horizontal">
+					{{Poruka}}
+				</form>
+			</div>
+			<div class="modal-footer" id="mfooter">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Uredu</button>
+			</div>
+		</div>
+	</div>
+</div>

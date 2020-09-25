@@ -1,0 +1,183 @@
+<div class="container">
+	<div class="jumbotron" style="text-align: center;">
+		<h1>Upravljanje zaposlenicima</h1>
+	</div>
+	<div class="row">
+	</div>
+</div>
+<div>
+	<select class="height-30" ng-model="selectedPozicija" ng-options="poz.id as poz.ime for poz in oPozicije">
+		<option value="">Pozicije</option>
+	</select>
+	<a ng-click="GetModal('dodaj')" class="btn btn-info btn-sm float-right">
+		<span class="glyphicon glyphicon-plus"></span> 
+	</a>
+	<input type="text" placeholder="Trazenje zaposlenika" class="height-30 float-right margin-right" ng-model="inputTrazilica">
+</div>
+<div class="table-responsive" style="margin-top: 14px; background-color: white;">
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>Ime</th>
+				<th>Prezime</th>
+				<th>Korisnicko ime</th>
+				<th>Sifra</th>
+				<th class="text-center">Uredi</th>
+				<th class="text-center">Obrisi</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="zaposlenik in oZaposlenici | filter: inputTrazilica | filter:fPozicije | filter:fRacunDeaktiviran">
+				<td>{{zaposlenik.ime}}</td>
+				<td>{{zaposlenik.prezime}}</td>
+				<td>{{zaposlenik.username}}</td>
+				<td>{{zaposlenik.sifra}}</td>
+				<td class="text-center">
+					<a ng-click="GetModal('uredi', zaposlenik)" href="">
+          				<span class="glyphicon glyphicon-edit" style="font-size:1.5em;"></span>
+        			</a>
+    			</td>
+    			<td class="text-center">
+					<a ng-click="GetModal('obrisi', zaposlenik.sifrazap)" href="">
+          				<span class="glyphicon glyphicon-remove-circle" style="font-size:1.5em; color: red;"></span>
+        			</a>
+    			</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="modal" id="dodajzaposlenika" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">  
+			<div class="modal-header" style="background-color:#2a7ec5;">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" style="color:white"> Novi zaposlenik</h4>
+			</div>			
+			<div class="modal-body">
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3">Ime</label>
+						<div class="col-md-8">
+							<input 	ng-model="inpIme" data-parsley-required="true" type="text" placeholder="Unesite ime zaposlenika" class="form-control" >
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3">Prezime</label>
+						<div class="col-md-8">
+							<input 	ng-model="inpPrezime" data-parsley-required="true" type="text" placeholder="Unesite prezime zaposlenika" class="form-control" >
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3">Korisnicko ime</label>
+						<div class="col-md-8">
+							<input 	ng-model="inpKorIme" data-parsley-required="true" type="text" placeholder="Unesite korisnicko ime zaposlenika" class="form-control">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3">Sifra</label>
+						<div class="col-md-8">
+							<input 	ng-model="inpSifra" data-parsley-required="true" type="password" min="0" placeholder="Unesite sifru zaposlenika" class="form-control">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3">Pozicija</label>
+						<div class="col-md-8">
+							<select class="height-30 float-left form-control" data-parsley-required="true" ng-model="inpPozicija" ng-options="poz.id as poz.ime for poz in oPozicije">
+								<option value="">Pozicije</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group" id="greska">
+						<div class="col-md-8 text-center greska">
+							{{Greska}}
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer" id="mfooter">
+				<button type="button" class="btn btn-success btn-s" ng-click="DodajZaposlenika()" data-dismiss="modal">Dodaj</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal" id="uredizaposlenika" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">  
+			<div class="modal-header" style="background-color:#2a7ec5;">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" style="color:white"> Uredi zaposlenika</h4>
+			</div>			
+			<div class="modal-body">
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3">Ime</label>
+						<div class="col-md-8">
+							<input 	ng-model="inpUrIme" data-parsley-required="true" type="text" placeholder="Unesite ime zaposlenika" class="form-control" >
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3">Prezime</label>
+						<div class="col-md-8">
+							<input 	ng-model="inpUrPrezime" data-parsley-required="true" type="text" placeholder="Unesite prezime zaposlenika" class="form-control" >
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3">Korisnicko ime</label>
+						<div class="col-md-8">
+							<input 	ng-model="inpUrKorIme" data-parsley-required="true" type="text" placeholder="Unesite korisnicko ime zaposlenika" class="form-control">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3">Sifra</label>
+						<div class="col-md-8">
+							<input 	ng-model="inpUrSifra" data-parsley-required="true" type="text" min="0" placeholder="Unesite sifru zaposlenika" class="form-control">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3">Pozicija</label>
+						<div class="col-md-8">
+							<select class="height-30 float-left form-control" data-parsley-required="true" ng-model="inpUrPozicija" ng-options="poz.id as poz.ime for poz in oPozicije">
+								<option value="">Pozicije</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group" id="greska2">
+						<div class="col-md-8 text-center greska">
+							{{Greska}}
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer" id="mfooter">
+				<button type="button" class="btn btn-success btn-s" ng-click="UrediZaposlenika()" data-dismiss="modal">Uredi</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal" id="obrisizaposlenika" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">  
+			<div class="modal-header" style="background-color:#2a7ec5;">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" style="color:white"> Upozorenje</h4>
+			</div>			
+			<div class="modal-body">
+				<form class="form-horizontal">
+					Da li ste sigurni da zelite obrisati zaposlenika?
+				</form>
+			</div>
+			<div class="modal-footer" id="mfooter">
+				<button type="button" class="btn btn-danger btn-s" ng-click="ObrisiZaposlenika()" data-dismiss="modal">Da</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Ne</button>
+			</div>
+		</div>
+	</div>
+</div>

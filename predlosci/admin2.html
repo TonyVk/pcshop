@@ -1,0 +1,119 @@
+<div class="container">
+	<div class="jumbotron" style="text-align: center;">
+		<h1>Upravljanje kategorijama</h1>
+	</div>
+	<div class="row">
+	</div>
+</div>
+<div>
+	<a ng-click="GetModal('dodajkat')" class="btn btn-info btn-sm float-right">
+		<span class="glyphicon glyphicon-plus"></span> 
+	</a>
+	<input type="text" placeholder="Trazenje kategorija" class="height-30 float-right margin-right" ng-model="inputTrazilica">
+</div>
+<div class="table-responsive" style="margin-top: 40px; background-color: white;">
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>Sifra kategorije</th>
+				<th>Naziv kategorije</th>
+				<th class="text-center">Uredi</th>
+				<th class="text-center">Obrisi</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="kateg in oKategorije | filter: inputTrazilica | filter:fPozicije">
+				<td>{{kateg.sifra}}</td>
+				<td>{{kateg.naziv}}</td>
+				<td class="text-center">
+					<a ng-click="GetModal('uredikat', kateg)" href="">
+          				<span class="glyphicon glyphicon-edit" style="font-size:1.5em;"></span>
+        			</a>
+    			</td>
+    			<td class="text-center">
+					<a ng-click="GetModal('obrisikat', kateg.sifra)" href="">
+          				<span class="glyphicon glyphicon-remove-circle" style="font-size:1.5em; color: red;"></span>
+        			</a>
+    			</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="modal" id="dodajkategoriju" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">  
+			<div class="modal-header" style="background-color:#2a7ec5;">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" style="color:white"> Nova kategorija</h4>
+			</div>			
+			<div class="modal-body">
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3">Naziv kategorije</label>
+						<div class="col-md-8">
+							<input 	ng-model="inpNazivKat" data-parsley-required="true" type="text" placeholder="Unesite naziv kategorije" class="form-control" >
+						</div>
+					</div>
+					<div class="form-group" id="greska">
+						<div class="col-md-8 text-center greska">
+							{{Greska}}
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer" id="mfooter">
+				<button type="button" class="btn btn-success btn-s" ng-click="DodajKategoriju()" data-dismiss="modal">Dodaj</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal" id="uredikategoriju" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">  
+			<div class="modal-header" style="background-color:#2a7ec5;">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" style="color:white"> Uredi kategoriju</h4>
+			</div>			
+			<div class="modal-body">
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3">Naziv</label>
+						<div class="col-md-8">
+							<input 	ng-model="inpUrKatNaziv" data-parsley-required="true" type="text" placeholder="Unesite naziv kategorije" class="form-control" >
+						</div>
+					</div>
+					<div class="form-group" id="greska2">
+						<div class="col-md-8 text-center greska">
+							{{Greska}}
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer" id="mfooter">
+				<button type="button" class="btn btn-success btn-s" ng-click="UrediKategoriju()" data-dismiss="modal">Uredi</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal" id="obrisikategoriju" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">  
+			<div class="modal-header" style="background-color:#2a7ec5;">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" style="color:white"> Upozorenje</h4>
+			</div>			
+			<div class="modal-body">
+				<form class="form-horizontal">
+					Da li ste sigurni da zelite obrisati kategoriju?<br>
+					<font style="color:red">Ukoliko se pod tom kategorijom nalaze artikli i oni ce biti obrisani!</font>
+				</form>
+			</div>
+			<div class="modal-footer" id="mfooter">
+				<button type="button" class="btn btn-danger btn-s" ng-click="ObrisiKategoriju()" data-dismiss="modal">Da</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Ne</button>
+			</div>
+		</div>
+	</div>
+</div>

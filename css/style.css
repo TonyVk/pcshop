@@ -1,0 +1,79 @@
+.float-right
+{
+	float:right;
+}
+.float-left
+{
+	float:left;
+}
+.margin-right
+{
+	margin-right:5px;
+}
+.table
+{
+	width:100% !important;
+	margin-bottom: 0px !important;
+}
+#zadnji:hover
+{
+	background-color: white;
+}
+.height-30
+{
+	height:30px;
+}
+
+#login
+{
+	margin-top: 70px;
+}
+
+@media (min-width: 768px)
+{
+	#login
+	{
+		width: 565px;
+	}
+}
+
+.card-header
+{
+	background-color: #337ab7;
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+
+.card-body
+{
+	padding: 20px;
+	background-color: gray;
+}
+
+.greska
+{
+	background-color: #f32b2b;
+    width: 100% !important;
+    color: white;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.jumbotron
+{
+	margin-top:70px !important;
+}
+
+.table-responsive
+{
+	background-color: white;
+}
+
+#logo
+{
+	width: 51px;
+    position: relative;
+    top: -15px;
+    left: -15px;
+    margin-right: -30px;
+}
